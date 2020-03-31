@@ -14,12 +14,16 @@ class Link(models.Model):
     href = models.URLField(verbose_name='链接')  # 默认长度为200
     status = models.PositiveIntegerField(default=STATUS_NORMAL,
                                          choices=STATUS_ITEMS, verbose_name='状态')
-    is_nav = models.BooleanField(default=False, verbose_name='是否为导航')
+    weight = models.PositiveIntegerField(default=1, choices=zip(range(1, 6), range(1, 6)),
+                                         verbose_name='权重', help_text='权重高展示顺序靠前')
     owner = models.ForeignKey(User, verbose_name='作者', on_delete=models.CASCADE)  # 级联删除
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
 
     class Meta:
         verbose_name = verbose_name_plural = '友链'  # 在admin管理界面显示的名称
+
+    def __str__(self):
+        return self.title
 
 
 class SideBar(models.Model):
@@ -48,4 +52,7 @@ class SideBar(models.Model):
 
     class Meta:
         verbose_name = verbose_name_plural = '侧边栏'
+
+    def __str__(self):
+        return self.title
 
