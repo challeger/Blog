@@ -1,11 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>List</title>
-</head>
-<body>
-    <h1>List</h1>
-    {{ name }}
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if tag %}
+        标签页: {{ tag.name }}
+
+    {% elif category %}
+        分类页: {{ category.name }}
+
+    {% else %}
+        Posts
+    {% endif %}
+{% endblock %}
+
+{% block main %}
+    <ul>
+        {% for post in post_lists %}
+            <li>
+                <a href="{% url 'blog:post-detail' post.id %}">{{ post.title }}</a>
+                <div>
+                    <span>作者:{{ post.owner.username }}</span>
+                    <span>分类:{{ post.category.name }}</span>
+                </div>
+                <p>{{ post.desc }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
