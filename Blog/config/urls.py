@@ -7,5 +7,5 @@ from config import views
 
 app_name = 'config'
 urlpatterns = [
-    path('links/', views.links, name='links'),
+    path('links/', views.LinkListView.as_view(), name='links'),
 ]

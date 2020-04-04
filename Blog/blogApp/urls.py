@@ -10,5 +10,7 @@ urlpatterns = [
     path('category/<int:category_id>/', views.CategoryView.as_view(), name='category-list'),
     path('tag/<int:tag_id>/', views.TagView.as_view(), name='tag-list'),
     path('post/<int:post_id>.html', views.PostDetailView.as_view(), name='post-detail'),
+    path('search/', views.SearchView.as_view(), name='search'),
+    path('author/<int:owner_id>/', views.AuthorView.as_view(), name='author'),
     re_path(r'^', views.IndexView.as_view(), name='post_list'),
 ]
