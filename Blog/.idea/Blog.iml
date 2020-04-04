@@ -22,9 +22,15 @@
     <option name="TEMPLATE_FOLDERS">
       <list>
         <option value="$MODULE_DIR$/templates" />
-        <option value="$MODULE_DIR$/templates/blog" />
-        <option value="$MODULE_DIR$/templates/config" />
-        <option value="$MODULE_DIR$/templates/config/blocks" />
+        <option value="$MODULE_DIR$/templates/themes/default/blog" />
+        <option value="$MODULE_DIR$/templates/themes/default/config" />
+        <option value="$MODULE_DIR$/templates/themes/default/config/blocks" />
+        <option value="$MODULE_DIR$/templates/themes" />
+        <option value="$MODULE_DIR$/templates/themes/default" />
+        <option value="$MODULE_DIR$/templates/themes/bootstrap" />
+        <option value="$MODULE_DIR$/templates/themes/bootstrap/blog" />
+        <option value="$MODULE_DIR$/templates/themes/bootstrap/config" />
+        <option value="$MODULE_DIR$/templates/themes/bootstrap/config/blocks" />
       </list>
     </option>
   </component>

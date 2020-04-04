@@ -7,8 +7,8 @@ from blogApp import views
 
 app_name = 'blog'
 urlpatterns = [
-    path('category/<int:category_id>/', views.post_list, name='category-list'),
-    path('tag/<int:tag_id>/', views.post_list, name='tag-list'),
-    path('post/<int:post_id>.html', views.post_detail, name='post-detail'),
-    re_path(r'^', views.post_list, name='post_list'),
+    path('category/<int:category_id>/', views.CategoryView.as_view(), name='category-list'),
+    path('tag/<int:tag_id>/', views.TagView.as_view(), name='tag-list'),
+    path('post/<int:post_id>.html', views.PostDetailView.as_view(), name='post-detail'),
+    re_path(r'^', views.IndexView.as_view(), name='post_list'),
 ]
