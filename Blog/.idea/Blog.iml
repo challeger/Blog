@@ -31,6 +31,7 @@
         <option value="$MODULE_DIR$/templates/themes/bootstrap/blog" />
         <option value="$MODULE_DIR$/templates/themes/bootstrap/config" />
         <option value="$MODULE_DIR$/templates/themes/bootstrap/config/blocks" />
+        <option value="$MODULE_DIR$/templates/themes/bootstrap/comment" />
       </list>
     </option>
   </component>

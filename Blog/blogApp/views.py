@@ -4,6 +4,8 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 
 from blogApp.models import Tag, Post, Category
+from comment.forms import CommentForm
+from comment.models import Comment
 from config.models import SideBar
 
 

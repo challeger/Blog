@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', custom_site.urls),
     path('super_admin/', admin.site.urls),
     path('config/', include('config.urls'), name='config'),
+    path('comment/', include('comment.urls'), name='comment'),
     re_path(r'^', include('blogApp.urls'), name='blog'),
 ]

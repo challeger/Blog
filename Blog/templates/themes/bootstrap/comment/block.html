@@ -1,0 +1,25 @@
+<hr>
+<div class="comment">
+    <ul>
+        {% for comment in comment_list %}
+            <li class="list-group-item">
+                <div class="nickname">
+                    <a href="{{ comment.website }}">{{ comment.nickname }}</a>
+                    <span>{{ comment.created_time }}</span>
+                </div>
+                <div class="comment-content">
+                    {% autoescape off %}
+                        {{ comment.content }}
+                    {% endautoescape %}
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    <hr>
+    <form action="{% url 'comment:commentView' %}" method="post" class="form-group">
+        {% csrf_token %}
+        <input type="hidden" name="target" value="{{ target }}">
+        {{ comment_form }}
+        <input type="submit" value="写好了!">
+    </form>
+</div>

@@ -1,6 +1,12 @@
 {% extends 'blog/base.html' %}
+{% load comment_block %}
 {% block title %}
     {{ post.title }}--友利奈绪
+{% endblock %}
+{% block extra_head %}
+    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/googlecode.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.18.1/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 {% endblock %}
 {% block main %}
     {% if post %}
@@ -11,8 +17,11 @@
         </div>
         <hr>
         <p>
-            {{ post.content }}
+            {% autoescape off %}
+                {{ post.content_html }}
+            {% endautoescape %}
         </p>
     {% endif %}
+    {% comment_block request.path %}
 {% endblock %}
 

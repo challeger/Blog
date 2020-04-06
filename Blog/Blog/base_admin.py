@@ -4,8 +4,6 @@ from django.contrib import admin
 
 
 class BaseOwnerAdmin(admin.ModelAdmin):
-    exclude = ('owner', )
-
     def get_queryset(self, request):
         qs = super(BaseOwnerAdmin, self).get_queryset(request)
         return qs.filter(owner=request.user)
