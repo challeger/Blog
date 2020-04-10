@@ -34,6 +34,9 @@ INSTALLED_APPS = [
     'blogApp',
     'config',
     'comment',
+    'xadmin',
+    'crispy_forms',
+    'reversion',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -112,3 +115,6 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+XADMIN_TITLE = 'Blog管理后台'
+XADMIN_FOOTER_TITLE = 'power by ylnx2000.cn'
