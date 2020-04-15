@@ -17,18 +17,33 @@ import xadmin
 from django.contrib import admin
 from django.contrib.sitemaps import views as sitemap_views
 from django.urls import path, include, re_path
+from rest_framework.routers import DefaultRouter
+from rest_framework.schemas import get_schema_view
 
 from Blog.custom_site import custom_site
+from blogApp.apis import PostViewSet, CategoryViewSet, TagViewSet
 from blogApp.rss import LatestPostFeed
 from blogApp.sitemap import PostSitemap
+from comment.apis import CommentViewSet
+from config.apis import LinkViewSet, SideBarViewSet
+
+router = DefaultRouter()
+router.register(r'post', PostViewSet, basename='api-post')
+router.register(r'category', CategoryViewSet, basename='api-category')
+router.register(r'tag', TagViewSet, basename='api-tag')
+router.register(r'comment', CommentViewSet, basename='api-comment')
+router.register(r'link', LinkViewSet, basename='api-link')
+router.register(r'sidebar', SideBarViewSet, basename='api-sidebar')
 
 urlpatterns = [
     path('admin/', custom_site.urls),
     path('super_admin/', admin.site.urls),
     path('xadmin/', xadmin.site.urls, name='xadmin'),
-    path('config/', include('config.urls'), name='config'),
-    path('comment/', include('comment.urls'), name='comment'),
+    path('config/', include('config.urls', namespace='config')),
+    path('comment/', include('comment.urls', namespace='comment')),
     path('rss/', LatestPostFeed(), name='rss'),
     path('sitemap.xml/', sitemap_views.sitemap, {'sitemaps': {'posts': PostSitemap}}),
-    re_path(r'^', include('blogApp.urls'), name='blog'),
+    path('api/', include((router.urls, 'api'))),
+    path('api/docs/', get_schema_view(title='My Project')),
+    re_path(r'^', include('blogApp.urls', namespace='blog')),
 ]

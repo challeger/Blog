@@ -13,4 +13,4 @@ class BaseOwnerAdmin:
 
     def save_models(self):
         self.new_obj.owner = self.request.user
-        return super().save_model()
+        return super().save_models()

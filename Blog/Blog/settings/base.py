@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',
     'reversion',
+    'rest_framework',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -118,3 +119,9 @@ STATIC_URL = '/static/'
 
 XADMIN_TITLE = 'Blog管理后台'
 XADMIN_FOOTER_TITLE = 'power by ylnx2000.cn'
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 2,
+}
