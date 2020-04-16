@@ -20,6 +20,7 @@ from blogApp.models import Category, Tag, Post
 class CategoryAdmin(BaseOwnerAdmin):
     list_display = ('name', 'status', 'is_nav', 'owner', 'created_time', 'posts_count')
     fields = ('name', 'status', 'is_nav')
+    search_fields = ('name', 'id')
 
     # inlines = [PostInline, ]  # 在同一页面编辑关联数据
 
@@ -33,6 +34,7 @@ class CategoryAdmin(BaseOwnerAdmin):
 class TagAdmin(BaseOwnerAdmin):
     list_display = ('name', 'status', 'created_time', 'owner')
     fields = ('name', 'status')
+    search_fields = ('name', 'id')
 
 
 class CategoryOwnerFilter(admin.SimpleListFilter):
@@ -62,6 +64,7 @@ class PostAdmin(BaseOwnerAdmin):
     
     list_filter = [CategoryOwnerFilter]  # 页面过滤器
     search_fields = ['title', 'category__name']  # 配置搜索字段
+    autocomplete_fields = ['category', 'tag']
     
     actions_on_top = True
     actions_on_bottom = True
@@ -81,6 +84,9 @@ class PostAdmin(BaseOwnerAdmin):
             'description': '摘要默认选取内容中的前140个字',
             'fields': (
                 'desc',
+                'is_md',
+                'content_ck',
+                'content_md',
                 'content',
             ),
         }),
@@ -98,12 +104,20 @@ class PostAdmin(BaseOwnerAdmin):
             reverse('cus_admin:blogApp_post_change', args=(obj.id,))
         )
     operator.short_description = '操作'
+    
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'category':
+            kwargs['queryset'] = Category.objects.filter(owner=request.user)
+        elif db_field.name == 'tag':
+            kwargs['queryset'] = Tag.objects.filter(owner=request.user)
+        
+        return super(PostAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
-    class Media:
-        css = {
-            'all': ("https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css", ),
-        }
-        js = ("https://cdn.bootcss.com/twitter-bootstrap/4.4.0/js/bootstrap.bundle.js", )
+    # class Media:
+    #     css = {
+    #         'all': ("https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css", ),
+    #     }
+    #     js = ("https://cdn.bootcss.com/twitter-bootstrap/4.4.0/js/bootstrap.bundle.js", 'js/post_editor.js')
 
 
 @admin.register(LogEntry, site=custom_site)

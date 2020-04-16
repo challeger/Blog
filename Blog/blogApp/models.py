@@ -83,6 +83,7 @@ class Post(models.Model):
     tag = models.ManyToManyField(Tag, verbose_name='标签')
     owner = models.ForeignKey(User, verbose_name='作者', on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+    is_md = models.BooleanField(default=False, verbose_name='markdown格式')
     pv = models.PositiveIntegerField(default=1)
     uv = models.PositiveIntegerField(default=1)
 
@@ -93,11 +94,13 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-    def save(self, force_insert=False, force_update=False, using=None,
-             update_fields=None):
-        self.content_html = mistune.markdown(self.content)
-        super(Post, self).save(force_insert=force_insert, force_update=force_update, using=using,
-                               update_fields=update_fields)
+    def save(self, *args, **kwargs):
+        if self.is_md:
+            self.content_html = mistune.markdown(self.content)
+        else:
+            self.content_html = self.content
+
+        super(Post, self).save(*args, **kwargs)
 
     @staticmethod
     def get_by_tag(tag_id):

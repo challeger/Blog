@@ -1,7 +1,11 @@
 #!/user/bin/env python
 # 每天都要有好心情
+from dal import autocomplete
 from django import forms
+from django.forms import Media
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
+
+from blogApp.models import Category, Tag, Post
 
 
 class PostAdminForm(forms.ModelForm):
@@ -9,6 +13,23 @@ class PostAdminForm(forms.ModelForm):
     content_ck = forms.CharField(widget=CKEditorUploadingWidget(), label='正文', required=True)
     content_md = forms.CharField(widget=forms.Textarea, label='正文', required=False)
     content = forms.CharField(widget=forms.HiddenInput, required=False)
+    # category = forms.ModelChoiceField(
+    #     queryset=Category.objects.all(),
+    #     widget=autocomplete.ModelSelect2(url='category-autocomplete'),
+    #     label='分类',
+    # )
+    # tag = forms.ModelMultipleChoiceField(
+    #     queryset=Tag.objects.all(),
+    #     widget=autocomplete.ModelSelect2Multiple(url='tag-autocomplete'),
+    #     label='标签',
+    # )
+    #
+
+    # class Meta:
+    #     model = Post
+    #     fields = ('category', 'tag', 'desc', 'title',
+    #               'is_md', 'content', 'content_md', 'content_ck',
+    #               'status')
 
     def __init__(self, instance=None, initial=None, **kwargs):
         initial = initial or {}
@@ -37,4 +58,4 @@ class PostAdminForm(forms.ModelForm):
         return super(PostAdminForm, self).clean()
 
     class Media:
-        js = ('js/post_editor_admin.js', )
+        js = ('js/post_editor.js', )

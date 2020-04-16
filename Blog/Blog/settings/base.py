@@ -38,6 +38,10 @@ INSTALLED_APPS = [
     'crispy_forms',
     'reversion',
     'rest_framework',
+    'dal',
+    'dal_select2',
+    'ckeditor',
+    'ckeditor_uploader',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -116,6 +120,9 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, '../static'),
+]
 
 XADMIN_TITLE = 'Blog管理后台'
 XADMIN_FOOTER_TITLE = 'power by ylnx2000.cn'
@@ -125,3 +132,18 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 2,
 }
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': 800,
+        'tabSpaces': 4,
+        'extraPlugins': 'codesnippet',
+    }
+}
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, '../media')
+CKEDITOR_UPLOAD_PATH = 'article_images'
+

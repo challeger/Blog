@@ -32,6 +32,9 @@
         <option value="$MODULE_DIR$/templates/themes/bootstrap/config" />
         <option value="$MODULE_DIR$/templates/themes/bootstrap/config/blocks" />
         <option value="$MODULE_DIR$/templates/themes/bootstrap/comment" />
+        <option value="$MODULE_DIR$/templates/themes/bootstrap/static" />
+        <option value="$MODULE_DIR$/templates/themes/bootstrap/static/js" />
+        <option value="$MODULE_DIR$/static" />
       </list>
     </option>
   </component>

@@ -1,17 +1,13 @@
 #!/user/bin/env python
 # 每天都要有好心情
 import xadmin
-from django.contrib import admin
-from django.contrib.admin.models import LogEntry
-from django.urls import reverse
 from django.utils.html import format_html
 from xadmin.layout import Row, Fieldset
 from xadmin.filters import manager, RelatedFieldListFilter
 
 from Blog.base_xadmin import BaseOwnerAdmin
-from Blog.custom_site import custom_site
 
-from blogApp.adminforms import PostAdminForm
+from blogApp.xadminforms import PostAdminForm
 from blogApp.models import Category, Tag, Post
 
 
@@ -25,6 +21,7 @@ from blogApp.models import Category, Tag, Post
 class CategoryAdmin(BaseOwnerAdmin):
     list_display = ('name', 'status', 'is_nav', 'owner', 'created_time', 'posts_count')
     fields = ('name', 'status', 'is_nav')
+    search_fields = ('name', 'id')
 
     # inlines = [PostInline, ]  # 在同一页面编辑关联数据
 
@@ -38,6 +35,7 @@ class CategoryAdmin(BaseOwnerAdmin):
 class TagAdmin(BaseOwnerAdmin):
     list_display = ('name', 'status', 'created_time', 'owner')
     fields = ('name', 'status')
+    search_fields = ('name', 'id')
 
 
 class CategoryOwnerFilter(RelatedFieldListFilter):
@@ -85,6 +83,9 @@ class PostAdmin(BaseOwnerAdmin):
         Fieldset(
             '内容信息',
             'desc',
+            'is_md',
+            'content_ck',
+            'content_md',
             'content',
         )
     )
@@ -98,11 +99,10 @@ class PostAdmin(BaseOwnerAdmin):
         )
     operator.short_description = '操作'
 
-    # @property
-    # def media(self):
-    #     media = super().media
-    #     media.add_js(['https://cdn.bootcss.com/twitter-bootstrap/4.4.0/js/bootstrap.bundle.js'])
-    #     media.add_css({
-    #         'all': ('https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css',),
-    #     })
-    #     return media
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        if db_field.name == 'category':
+            kwargs['queryset'] = Category.objects.filter(owner=self.request.user)
+        elif db_field.name == 'tag':
+            kwargs['queryset'] = Tag.objects.filter(owner=self.request.user)
+
+        return super().formfield_for_dbfield(db_field, **kwargs)
