@@ -54,3 +54,6 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
     re_path(r'^', include('blogApp.urls', namespace='blog')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += [path('silk/', include('silk.urls', namespace='silk')), ]

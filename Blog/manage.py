@@ -5,7 +5,7 @@ import sys
 
 
 def main():
-    profile = os.environ.get('TYPEIDEA_PROFILE', 'develop')
+    profile = os.environ.get('TYPEIDEA_PROFILE', 'product')
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Blog.settings.%s' % profile)
     try:
         from django.core.management import execute_from_command_line
